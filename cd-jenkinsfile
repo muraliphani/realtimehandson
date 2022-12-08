@@ -16,7 +16,7 @@ node(){
    stage("Git Checkout"){
    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'repo3git', url: 'https://github.com/muraliphani/realtimehandson.git']]])
    }
-   
+
    stage("Maven Build"){
    sh "mvn clean install"
    }
@@ -45,5 +45,10 @@ node(){
                 dockerImage.push('latest')
               }
           }
+  stage('deploy to EKS'){
+      sh "cd K8s"
+      sh "kubectl apply -f rentaldeployment.yaml"
+      sh "kubectl apply -f rentalservice.yaml"
+  }
 
 }
