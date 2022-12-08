@@ -38,14 +38,11 @@ node(){
 
 
   stage('Upload docker Image') {
-          steps{
-            script {
-              docker.withRegistry( ecrRegistry, awscreds) {
+
+          docker.withRegistry( ecrRegistry, awscreds) {
                 dockerImage.push("$BUILD_NUMBER")
                 dockerImage.push('latest')
               }
-            }
           }
-     }
 
 }
